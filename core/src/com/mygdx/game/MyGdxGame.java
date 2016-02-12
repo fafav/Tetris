@@ -37,7 +37,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		screen = new Texture(Gdx.files.internal("background/tetrisBckg.jpg"));
+		screen = new Texture(Gdx.files.internal("background/tetrisBckg.png"));
 		myMusic = new MusicActivity();
 
 		arrowLeft_ = new Texture(Gdx.files.internal("arrow/arrowleft.png"));
@@ -179,8 +179,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	public void printGrid(){
 		Texture t1,t2;
-		t1 = new Texture(Gdx.files.internal("linev.png"));
-		t2 = new Texture(Gdx.files.internal("lineh.png"));
+		t1 = new Texture(Gdx.files.internal("grid/linev.png"));
+		t2 = new Texture(Gdx.files.internal("grid/lineh.png"));
 
 		batch.begin();
 

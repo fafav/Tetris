@@ -30,10 +30,20 @@ public class MyGdxGame extends ApplicationAdapter {
 	MusicActivity myMusic;
 	boolean play = false;
 
+	private Texture arrowLeft_;
+	private Texture arrowRight_;
+	private Texture arrowUp_;
+	private Texture arrowDown_;
+
 	@Override
 	public void create () {
 		screen = new Texture(Gdx.files.internal("tetrisBckg.jpg"));
 		myMusic = new MusicActivity();
+
+		arrowLeft_ = new Texture(Gdx.files.internal("arrowleft.png"));
+		arrowRight_ = new Texture(Gdx.files.internal("arrowright.png"));
+		arrowUp_ = new Texture(Gdx.files.internal("arrowup.png"));
+		arrowDown_ = new Texture(Gdx.files.internal("arrowbottom.png"));
 
 		initGame();
 	}
@@ -51,7 +61,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(screen, 0, 0, 800, 1280);
+		batch.draw(screen, 30, 0, 800, 1280);
 		batch.end();
 		if(Gdx.input.isTouched()){
 			play = true;
@@ -101,6 +111,13 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		batch.begin();
+		batch.draw(arrowDown_, 780, 140, 100, 100);
+		batch.draw(arrowLeft_, 680, 220, 100, 100);
+		batch.draw(arrowUp_, 780, 300, 100, 100);
+		batch.draw(arrowRight_, 880, 220, 100, 100);
+		batch.end();
+
 		TimeUpd = System.currentTimeMillis();
 		myDeltaManager += Gdx.graphics.getDeltaTime();
 		eventManager += Gdx.graphics.getDeltaTime();
@@ -139,20 +156,23 @@ public class MyGdxGame extends ApplicationAdapter {
 			firstX = Gdx.input.getX();
 			firstY = Gdx.input.getY();
 			System.out.println(firstY);
-			if(firstY >= 1450){
+
+			if( firstY <= 1636 && firstY >= 1536 && firstX <= 833 && firstX >= 746 )
+			{
 				myGM.moveBlockDown();
 			}
-			if(firstY <= 300){
-				myGM.rotate();
-			}else{
-				if(firstX > 700){
-					myGM.moveRight(myGM.getMyGrid());
-				}
-				if(firstX < 100){
-					myGM.moveLeft(myGM.getMyGrid());
-				}
+			else if( firstY <= 1561 && firstY >= 1461 && firstX <= 791 && firstX >= 691 )
+			{
+				myGM.moveLeft(myGM.getMyGrid());
 			}
-
+			else if( firstY <= 1478 && firstY >= 1378 && firstX <= 886 && firstX >= 786 )
+			{
+				myGM.rotate();
+			}
+			else if( firstY <= 1561 && firstY >= 1461 && firstX <= 986 && firstX >= 886 )
+			{
+				myGM.moveRight(myGM.getMyGrid());
+			}
 		}
 
 	}

@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-//import com.badlogic.gdx.graphics.g2d.freetype;
+//import com.badlogic.gdx.graphics.g2d.;
 
 import java.util.ArrayList;
 /**
@@ -39,9 +39,8 @@ public class GameManager {
         }
     }
 
-
     public void generateNextTetrimino() {
-        int i = (int) (Math.random() * (7 - 1) + 1);
+        int i = (int) (Math.random() * (8 - 1) + 1);
         rotation = 0;
 
         switch (i) {
@@ -62,7 +61,7 @@ public class GameManager {
                 addGeneratedBlockToGrid();
                 break;
             case 5:
-                generateT();
+                generateI();
                 addGeneratedBlockToGrid();
                 break;
             case 6:
@@ -70,7 +69,7 @@ public class GameManager {
                 addGeneratedBlockToGrid();
                 break;
             case 7:
-                generateI();
+                generateT();
                 addGeneratedBlockToGrid();
                 break;
         }
@@ -102,6 +101,11 @@ public class GameManager {
             } else {
                 ret = ret & false;
             }
+        }
+
+        while ( checkLines() )
+        {
+            checkLines();
         }
 
         return ret;
@@ -548,9 +552,7 @@ public class GameManager {
                 otherBlocks.add(ba);
                 updateOthersToGrid();
 
-                while (checkLines()) {
-                    checkLines();
-                }
+
 
                 generateNextTetrimino();
             }
@@ -559,7 +561,11 @@ public class GameManager {
             ArrayList<block> ba = copyToOthers(myActiveBlocks);
             otherBlocks.add(ba);
             updateOthersToGrid();
-            checkLines();
+
+            while (checkLines())
+            {
+                checkLines();
+            }
             generateNextTetrimino();
         }
     }
@@ -631,49 +637,41 @@ public class GameManager {
 
     public void clearOther()
     {
-        boolean b, cleaning;
-
-        cleaning = true;
-
-        // tant qu'on nettoie
-        while (cleaning)
+        if ( otherBlocks.size() > 0)
         {
-            if ( otherBlocks.size() == 0)
-            {
-                cleaning = false;
-            }
-            // parcours des bloques posés
-            for (ArrayList<block> ar : otherBlocks)
-            {
-                b = true;
-                for (block bl : ar)
-                {
-                    // le x = -1 veut dire que le bloque a déjà été détruit
-                    // si tous les blocks ont un x à -1 on enlève la ligne du tableau
-                    if (bl.getX() == -1)
-                    {
-                        b = b & true;
-                    }
-                    else
-                    {
-                        b = b & false;
-                    }
-                }
+            boolean b, cleaning;
 
-                // si on a un tetrimino mort
-                if (b)
-                {
-                    // on regarde s'il s'agit du dernier tetriminos dans l'arraylist
-                    // si on on arrête le cleaning
-                    if (otherBlocks.indexOf(ar) == otherBlocks.size() - 1)
-                    {
-                        cleaning = false;
+            cleaning = true;
+
+            // tant qu'on nettoie
+            while (cleaning) {
+                // parcours des bloques posés
+                for (ArrayList<block> ar : otherBlocks) {
+                    b = true;
+                    for (block bl : ar) {
+                        // le x = -1 veut dire que le bloque a déjà été détruit
+                        // si tous les blocks ont un x à -1 on enlève la ligne du tableau
+                        if (bl.getX() == -1) {
+                            b = b & true;
+                        } else {
+                            b = b & false;
+                            cleaning = false;
+                        }
                     }
 
-                    // on détruit ce tetrimino définitivement
-                    otherBlocks.remove(ar);
-                    //on sort de la boucle for pour ne pas causer d'exception à la con
-                    break;
+                    // si on a un tetrimino mort
+                    if (b) {
+                        // on regarde s'il s'agit du dernier tetriminos dans l'arraylist
+                        // si on on arrête le cleaning
+                        if (otherBlocks.indexOf(ar) == otherBlocks.size() - 1) {
+                            cleaning = false;
+                        }
+
+                        // on détruit ce tetrimino définitivement
+                        otherBlocks.remove(ar);
+                        //on sort de la boucle for pour ne pas causer d'exception à la con
+                        break;
+                    }
                 }
             }
         }
@@ -789,6 +787,8 @@ public class GameManager {
                 a++;
             }
             sc += 100;
+
+            clearOther();
         }
 
         return lineFound;

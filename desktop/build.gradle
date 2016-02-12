@@ -44,7 +44,3 @@ task afterEclipseImport(description: "Post processing after project generation",
     printer.print(classpath)
   }
 }
-
-dependencies {
-    compile files('libs/gdx-freetype-sources.jar')
-}

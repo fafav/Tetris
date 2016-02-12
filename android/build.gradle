@@ -119,6 +119,3 @@ idea {
         }
     }
 }
-dependencies {
-    compile files('libs/gdx-freetype-sources.jar')
-}

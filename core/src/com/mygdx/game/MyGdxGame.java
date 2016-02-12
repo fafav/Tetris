@@ -37,7 +37,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		screen = new Texture(Gdx.files.internal("tetrisBckg.jpg"));
+		screen = new Texture(Gdx.files.internal("background/tetrisBckg.jpg"));
 		myMusic = new MusicActivity();
 
 		arrowLeft_ = new Texture(Gdx.files.internal("arrowleft.png"));

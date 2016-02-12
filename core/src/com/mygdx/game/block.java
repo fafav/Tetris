@@ -30,31 +30,31 @@ public class block {
         this.bt=bt;
         switch (bt){
             case j:
-                textureJ_ = new Texture(Gdx.files.internal("J.jpg"));
+                textureJ_ = new Texture(Gdx.files.internal("tetrominos/J.jpg"));
                 c = new Color(0,26,255,0);
                 break;
             case l:
-                textureL_ = new Texture(Gdx.files.internal("L.jpg"));
+                textureL_ = new Texture(Gdx.files.internal("tetrominos/L.jpg"));
                 c = new Color(135,228,255,0);
                 break;
             case o:
-                textureO_ = new Texture(Gdx.files.internal("O.jpg"));
+                textureO_ = new Texture(Gdx.files.internal("tetrominos/O.jpg"));
                 c = new Color(255,255,0,0);
                 break;
             case s:
-                textureS_ = new Texture(Gdx.files.internal("S.jpg"));
+                textureS_ = new Texture(Gdx.files.internal("tetrominos/S.jpg"));
                 c = new Color(0,255,0,0);
                 break;
             case t:
-                textureT_ = new Texture(Gdx.files.internal("T.jpg"));
+                textureT_ = new Texture(Gdx.files.internal("tetrominos/T.jpg"));
                 c = new Color(203,26,186,0);
                 break;
             case z:
-                textureZ_ = new Texture(Gdx.files.internal("Z.jpg"));
+                textureZ_ = new Texture(Gdx.files.internal("tetrominos/Z.jpg"));
                 c = new Color(255,0,0,0);
                 break;
             case i:
-                textureI_ = new Texture(Gdx.files.internal("I.jpg"));
+                textureI_ = new Texture(Gdx.files.internal("tetrominos/I.jpg"));
                 c = new Color(255,255,0,0);
                 break;
         }

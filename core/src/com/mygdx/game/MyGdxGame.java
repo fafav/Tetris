@@ -51,7 +51,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(screen, 0, 0, 1280, 800);
+		batch.draw(screen, 0, 0, 800, 1280);
 		batch.end();
 		if(Gdx.input.isTouched()){
 			play = true;

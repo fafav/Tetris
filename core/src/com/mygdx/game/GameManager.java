@@ -456,7 +456,6 @@ public class GameManager {
             System.out.println(i);
             printGrid();
 
-
             for (block b : myActiveBlocks) {
                 myGrid[b.getX()][b.getY()] = true;
             }
@@ -501,7 +500,6 @@ public class GameManager {
     public void moveLeft(boolean[][] grd) {
         boolean k = true;
 
-
         // check border
         for (block b : myActiveBlocks) {
             if (b.getX() == 0) {
@@ -533,7 +531,6 @@ public class GameManager {
                 }
             }
         }
-
     }
 
     public void moveBlockDown() {
@@ -551,8 +548,6 @@ public class GameManager {
                 ArrayList<block> ba = copyToOthers(myActiveBlocks);
                 otherBlocks.add(ba);
                 updateOthersToGrid();
-
-
 
                 generateNextTetrimino();
             }
@@ -612,19 +607,19 @@ public class GameManager {
             if (b.getX() >= 0) {
 
                 if (b.getBt() == blockType.l) {
-                    bat.draw(block.getL(), 140 + b.getX() * 40, 940 - b.getY() * 40, 40, 40);
+                    bat.draw(block.getL(), 140 + b.getX() * 60, 940 - b.getY() * 60, 60,60);
                 } else if (b.getBt() == blockType.j) {
-                    bat.draw(block.getJ(), 140 + b.getX() * 40, 940 - b.getY() * 40, 40, 40);
+                    bat.draw(block.getJ(), 140 + b.getX() * 60, 940 - b.getY() * 60, 60,60);
                 } else if (b.getBt() == blockType.i) {
-                    bat.draw(block.getI(), 140 + b.getX() * 40, 940 - b.getY() * 40, 40, 40);
+                    bat.draw(block.getI(), 140 + b.getX() * 60, 940 - b.getY() * 60, 60,60);
                 } else if (b.getBt() == blockType.t) {
-                    bat.draw(block.getT(), 140 + b.getX() * 40, 940 - b.getY() * 40, 40, 40);
+                    bat.draw(block.getT(), 140 + b.getX() * 60, 940 - b.getY() * 60, 60,60);
                 } else if (b.getBt() == blockType.o) {
-                    bat.draw(block.getO(), 140 + b.getX() * 40, 940 - b.getY() * 40, 40, 40);
+                    bat.draw(block.getO(), 140 + b.getX() * 60, 940 - b.getY() * 60, 60,60);
                 } else if (b.getBt() == blockType.s) {
-                    bat.draw(block.getS(), 140 + b.getX() * 40, 940 - b.getY() * 40, 40, 40);
+                    bat.draw(block.getS(), 140 + b.getX() * 60, 940 - b.getY() * 60, 60,60);
                 } else if (b.getBt() == blockType.z) {
-                    bat.draw(block.getZ(), 140 + b.getX() * 40, 940 - b.getY() * 40, 40, 40);
+                    bat.draw(block.getZ(), 140 + b.getX() * 60, 940 - b.getY() * 60, 60,60);
                 }
 
                 //mySR.rect(140 + b.getX() * 40, 940 - b.getY() * 40, 40, 40);
@@ -693,31 +688,31 @@ public class GameManager {
                 if(b.getX() >= 0 && b.getY() >= 0){
                     if( b.getBt() == blockType.l )
                     {
-                        bat.draw(block.getL(), 140 + b.getX() * 40, 940 - b.getY() * 40, 40,40);
+                        bat.draw(block.getL(), 140 + b.getX() * 60, 940 - b.getY() * 60, 60,60);
                     }
                     else if( b.getBt() == blockType.j )
                     {
-                        bat.draw(block.getJ(), 140 + b.getX() * 40, 940 - b.getY() * 40, 40,40);
+                        bat.draw(block.getJ(), 140 + b.getX() * 60, 940 - b.getY() * 60, 60,60);
                     }
                     else if( b.getBt() == blockType.i )
                     {
-                        bat.draw(block.getI(), 140 + b.getX() * 40, 940 - b.getY() * 40, 40,40);
+                        bat.draw(block.getI(), 140 + b.getX() * 60, 940 - b.getY() * 60, 60,60);
                     }
                     else if( b.getBt() == blockType.t )
                     {
-                        bat.draw(block.getT(), 140 + b.getX() * 40, 940 - b.getY() * 40, 40,40);
+                        bat.draw(block.getT(), 140 + b.getX() * 60, 940 - b.getY() * 60, 60,60);
                     }
                     else if( b.getBt() == blockType.o )
                     {
-                        bat.draw(block.getO(), 140 + b.getX() * 40, 940 - b.getY() * 40, 40,40);
+                        bat.draw(block.getO(), 140 + b.getX() * 60, 940 - b.getY() * 60, 60,60);
                     }
                     else if( b.getBt() == blockType.s )
                     {
-                        bat.draw(block.getS(), 140 + b.getX() * 40, 940 - b.getY() * 40, 40,40);
+                        bat.draw(block.getS(), 140 + b.getX() * 60, 940 - b.getY() * 60, 60,60);
                     }
                     else if( b.getBt() == blockType.z )
                     {
-                        bat.draw(block.getZ(), 140 + b.getX() * 40, 940 - b.getY() * 40, 40,40);
+                        bat.draw(block.getZ(), 140 + b.getX() * 60, 940 - b.getY() * 60, 60,60);
                     }
                     //mySR.rect(140 + b.getX() * 40, 940 - b.getY() * 40, 40, 40);
                 }

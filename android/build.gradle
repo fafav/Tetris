@@ -8,7 +8,7 @@ android {
             aidl.srcDirs = ['src']
             renderscript.srcDirs = ['src']
             res.srcDirs = ['res']
-            assets.srcDirs = ['assets', 'src/main/assets', 'src/main/assets/sounds', 'src/main/assets/tetrominos', 'src/main/assets/grid', 'src/main/assets/background']
+            assets.srcDirs = ['assets']
             jniLibs.srcDirs = ['libs']
         }
 

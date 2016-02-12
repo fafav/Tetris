@@ -40,10 +40,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		screen = new Texture(Gdx.files.internal("background/tetrisBckg.jpg"));
 		myMusic = new MusicActivity();
 
-		arrowLeft_ = new Texture(Gdx.files.internal("arrowleft.png"));
-		arrowRight_ = new Texture(Gdx.files.internal("arrowright.png"));
-		arrowUp_ = new Texture(Gdx.files.internal("arrowup.png"));
-		arrowDown_ = new Texture(Gdx.files.internal("arrowbottom.png"));
+		arrowLeft_ = new Texture(Gdx.files.internal("arrow/arrowleft.png"));
+		arrowRight_ = new Texture(Gdx.files.internal("arrow/arrowright.png"));
+		arrowUp_ = new Texture(Gdx.files.internal("arrow/arrowup.png"));
+		arrowDown_ = new Texture(Gdx.files.internal("arrow/arrowbottom.png"));
 
 		initGame();
 	}

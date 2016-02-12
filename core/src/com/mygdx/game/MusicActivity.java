@@ -15,7 +15,7 @@ public class MusicActivity{
 
     public MusicActivity() {
 
-        tetris_ = Gdx.audio.newMusic(Gdx.files.internal("tetris.mp3"));
+        tetris_ = Gdx.audio.newMusic(Gdx.files.internal("sounds/tetris.mp3"));
         tetris05_ = Gdx.audio.newMusic(Gdx.files.internal("sounds/tetris05.mp3"));
         tetris01_ = Gdx.audio.newMusic(Gdx.files.internal("sounds/tetris01.mp3"));
         gameover_ = Gdx.audio.newMusic(Gdx.files.internal("sounds/game_over.mp3"));

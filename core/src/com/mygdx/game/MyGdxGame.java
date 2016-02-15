@@ -8,14 +8,18 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 
 public class MyGdxGame extends ApplicationAdapter {
 
 	SpriteBatch batch;
-	BitmapFont font;
+
 	int x,move;
 	ShapeRenderer sr;
 	float TimeSt, TimeUpd;
@@ -34,9 +38,17 @@ public class MyGdxGame extends ApplicationAdapter {
 	private Texture arrowRight_;
 	private Texture arrowUp_;
 	private Texture arrowDown_;
+	Stage stage;
 
+	Button buttonDown;
+	Button buttonLeft;
+	Button buttonUp;
+	Button buttonRight;
+
+	/****************************************************************************************************/
 	@Override
-	public void create () {
+	public void create ()
+	{
 		screen = new Texture(Gdx.files.internal("background/tetrisBckg.png"));
 		myMusic = new MusicActivity();
 
@@ -45,31 +57,123 @@ public class MyGdxGame extends ApplicationAdapter {
 		arrowUp_ = new Texture(Gdx.files.internal("arrow/arrowup.png"));
 		arrowDown_ = new Texture(Gdx.files.internal("arrow/arrowbottom.png"));
 
+		buttonDown = new Button();
+		buttonDown.setPosition(750, 300);
+		buttonLeft = new Button();
+		buttonLeft.setPosition(625, 425);
+		buttonUp = new Button();
+		buttonUp.setPosition(750, 550);
+		buttonRight = new Button();
+		buttonRight.setPosition(875, 425);
+
+		stage = new Stage();
+
+		createButtons(buttonDown, arrowDown_);
+		initListenerDown();
+		createButtons(buttonLeft, arrowLeft_);
+		initListenerLeft();
+		createButtons(buttonUp, arrowUp_);
+		initListenerUp();
+		createButtons(buttonRight, arrowRight_);
+		initListenerRight();
+
 		initGame();
 	}
 
+	/****************************************************************************************************/
 	@Override
-	public void render() {
+	public void render()
+	{
 		if(play){
 			gameT();
-		}else{
+			stage.draw();
+		}else {
 			ScreenT();
 		}
 	}
 
-	public void ScreenT(){
+	/****************************************************************************************************/
+	public void createButtons(final Button button, Texture texture)
+	{
+		Skin skin = new Skin();
+		skin.add("", texture);
+		Button.ButtonStyle buttonStyle = new Button.ButtonStyle();
+		buttonStyle.up = skin.getDrawable("");
+		buttonStyle.down = skin.getDrawable("");
+		button.setStyle(buttonStyle);
+
+		button.setSize(150, 150);
+		button.center();
+
+		stage.addActor(button);
+		Gdx.input.setInputProcessor(stage);
+	}
+
+	/****************************************************************************************************/
+	public void initListenerDown()
+	{
+		buttonDown.addListener(new ClickListener()
+		{
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				myGM.moveBlockDown();
+			}
+		});
+	}
+
+	/***************************************************************************************************/
+	public void initListenerLeft()
+	{
+		buttonLeft.addListener(new ClickListener()
+		{
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				myGM.moveLeft(myGM.getMyGrid());
+			}
+		});
+	}
+
+	/****************************************************************************************************/
+	public void initListenerUp()
+	{
+		buttonUp.addListener(new ClickListener()
+		{
+			@Override
+			public void clicked(InputEvent event, float x, float y)
+			{
+				myGM.rotate();
+			}
+		});
+	}
+
+	/****************************************************************************************************/
+	public void initListenerRight()
+	{
+		buttonRight.addListener(new ClickListener()
+		{
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				myGM.moveRight(myGM.getMyGrid());
+			}
+		});
+	}
+
+	/****************************************************************************************************/
+	public void ScreenT()
+	{
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(screen, 30, 0, 800, 1280);
+		batch.draw(screen, 0, 0, 1100, 2000);
 		batch.end();
 		if(Gdx.input.isTouched()){
 			play = true;
 		}
 	}
 
-	public void printScore(){
-
+	/****************************************************************************************************/
+	public void printScore()
+	{
 		BitmapFont font = new BitmapFont();
 
 		String text = "Score : " + myGM.getScore();
@@ -79,8 +183,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch.end();
 	}
 
-	public void initGame(){
-		Stage myStage = new Stage();
+	/****************************************************************************************************/
+	public void initGame()
+	{
 		b = new BitmapFont();
 		Label.LabelStyle ls = new Label.LabelStyle(b, Color.WHITE);
 		myLab = new Label("",ls);
@@ -90,41 +195,30 @@ public class MyGdxGame extends ApplicationAdapter {
 		myDeltaManager = 0;
 		eventManager = 0;
 
-		//myStage = new Stage();
-		//myStage.addActor(myLab);
-		//Gdx.input.setInputProcessor(myStage);
-
-
 		myGM = new GameManager();
 		myGM.generateNextTetrimino();
 		batch = new SpriteBatch();
-		font = new BitmapFont();
 		TimeSt = System.currentTimeMillis();
-
 
 		myMusic.playTetris();
 		myMusic.loopTetris();
 	}
 
-
-	public void gameT(){
+	/****************************************************************************************************/
+	public void gameT()
+	{
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.begin();
-		batch.draw(arrowDown_, 780, 140, 100, 100);
-		batch.draw(arrowLeft_, 680, 220, 100, 100);
-		batch.draw(arrowUp_, 780, 300, 100, 100);
-		batch.draw(arrowRight_, 880, 220, 100, 100);
+		batch.draw(screen, 0, 0, 1100, 2000);
 		batch.end();
 
 		TimeUpd = System.currentTimeMillis();
 		myDeltaManager += Gdx.graphics.getDeltaTime();
 		eventManager += Gdx.graphics.getDeltaTime();
-//		myStage.draw();
 		printGrid();
 		printScore();
-		//l.setText(myGM.getSc()+ "");
 
 		if(eventManager > 0.1){
 			manageEvent();
@@ -148,7 +242,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		}
 	}
 
-	public void manageEvent(){
+	/****************************************************************************************************/
+	public void manageEvent()
+	{
 		int firstX;
 		int firstY;
 
@@ -157,7 +253,8 @@ public class MyGdxGame extends ApplicationAdapter {
 			firstY = Gdx.input.getY();
 			System.out.println(firstY);
 
-			if( firstY <= 1636 && firstY >= 1536 && firstX <= 833 && firstX >= 746 )
+
+			if( firstY <= 1836 && firstY >= 1736 && firstX <= 833 && firstX >= 646 )
 			{
 				myGM.moveBlockDown();
 			}
@@ -177,7 +274,9 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	}
 
-	public void printGrid(){
+	/****************************************************************************************************/
+	public void printGrid()
+	{
 		Texture t1,t2;
 		t1 = new Texture(Gdx.files.internal("grid/linev.png"));
 		t2 = new Texture(Gdx.files.internal("grid/lineh.png"));

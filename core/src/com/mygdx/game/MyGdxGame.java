@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.Color;
 public class MyGdxGame extends ApplicationAdapter {
 
 	SpriteBatch batch;
-	BitmapFont font, fontTitle, fontStart, b;
+	BitmapFont font, fontTitle, fontStart;
 	ShapeRenderer sr;
 	Texture screen, t1, t2;
 	GameManager myGM;

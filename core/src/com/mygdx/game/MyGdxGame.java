@@ -8,35 +8,28 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 
 public class MyGdxGame extends ApplicationAdapter {
 
 	SpriteBatch batch;
-	SpriteBatch batchTitle;
-	BitmapFont font;
-	BitmapFont fontTitle;
-	BitmapFont b;
+	BitmapFont font, fontTitle, fontStart, b;
 	ShapeRenderer sr;
-	Texture screen;
+	Texture screen, t1, t2;
 	GameManager myGM;
-	Label myLab;
 	MusicActivity myMusic;
-	float TimeSt, TimeUpd;
+
 	double timer = 0.7;
-	float myDeltaManager;
-	float eventManager;
-	int x,move;
+	float myDeltaManager, eventManager, TimeSt,TimeUpd;
+	int x, move, firstX, firstY;
 	boolean play = false;
 
-	/*private static Color red_;
+	private static Color red_;
 	private static Color orange_;
 	private static Color yellow_;
 	private static Color green_;
 	private static Color blue_;
-	private static Color purple_;*/
+	private static Color purple_;
 	private Texture arrowLeft_;
 	private Texture arrowRight_;
 	private Texture arrowUp_;
@@ -46,77 +39,69 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void create () {
 		screen = new Texture(Gdx.files.internal("background/tetrisBckg.png"));
 		myMusic = new MusicActivity();
-		batchTitle = new SpriteBatch();
-		fontTitle = new BitmapFont(Gdx.files.internal("font/font.fnt"), Gdx.files.internal("font/font.png"), false);
+		batch = new SpriteBatch();
+		fontTitle = new BitmapFont(Gdx.files.internal("fonts/nine_pin.fnt"), Gdx.files.internal("fonts/nine_pin.png"), false);
+		fontStart = new BitmapFont(Gdx.files.internal("fonts/press.fnt"), Gdx.files.internal("fonts/press.png"), false);
+		//Need to have/generate font white to add color later
 
 		arrowLeft_ = new Texture(Gdx.files.internal("arrow/arrowleft.png"));
 		arrowRight_ = new Texture(Gdx.files.internal("arrow/arrowright.png"));
 		arrowUp_ = new Texture(Gdx.files.internal("arrow/arrowup.png"));
 		arrowDown_ = new Texture(Gdx.files.internal("arrow/arrowbottom.png"));
 
-		/*red_ = new Color(198, 17, 23, 1);
-		orange_ = new Color(214, 118, 6, 1);
-		yellow_ = new Color(211, 217, 25, 1);
-		green_ = new Color(137, 203, 12, 1);
-		blue_ = new Color(8, 144, 229, 1);
-		purple_ = new Color(215, 24, 242, 1);*/
+		//To convert: color rgba/255.0f !! Not for rgba 1
+		red_ = new Color(0.866f, 0.137f, 0.141f, 1.0f);
+		//RGBA RED = (221, 35, 36, 1);
+		orange_ = new Color(0.839f, 0.462f, 0.023f, 1.0f);
+		//RGBA ORANGE = (214, 118, 6, 1);
+		yellow_ = new Color(0.827f, 0.850f, 0.098f, 1.0f);
+		//RGBA YELLOW = (211, 217, 25, 1);
+		green_ = new Color(0.537f, 0.796f, 0.047f, 1.0f);
+		//RGBA GREEN  = (137, 203, 12, 1);
+		blue_ = new Color(0.031f , 0.564f, 0.898f, 1.0f);
+		//RGBA BLUE = (8, 144, 229, 1);
+		purple_ = new Color(0.843f, 0.094f, 0.949f, 1.0f);
+		//RGBA PURPLE = (215, 24, 242, 1);
 
 		initGame();
 	}
 
-	/*public static Color getRed() { return red_; }
+	public static Color getRed() { return red_; }
 	public static Color getOrange() { return orange_; }
 	public static Color getYellow() { return yellow_; }
 	public static Color getGreen() { return green_; }
 	public static Color getBlue() { return blue_; }
-	public static Color getPurple() { return purple_; }*/
+	public static Color getPurple() { return purple_; }
 
 	@Override
 	public void render() {
 		if(play){
-			gameT();
+			gameP();
 		}else{
-			ScreenT();
+			homeP();
 		}
 	}
 
-	public void ScreenT(){
+	public void homeP(){
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(screen, 30, 0, 800, 1280);
+		fontTitle.setColor(MyGdxGame.getRed());
+		fontTitle.draw(batch, "T", 200, 1100);
+		fontTitle.setColor(MyGdxGame.getOrange());
+		fontTitle.draw(batch, "E", 275, 1100);
+		fontTitle.setColor(MyGdxGame.getYellow());
+		fontTitle.draw(batch, "T", 350, 1100);
+		fontTitle.setColor(MyGdxGame.getGreen());
+		fontTitle.draw(batch, "R", 425, 1100);
+		fontTitle.setColor(MyGdxGame.getBlue());
+		fontTitle.draw(batch, "I", 500, 1100);
+		fontTitle.setColor(MyGdxGame.getPurple());
+		fontTitle.draw(batch, "S", 575, 1100);
+        fontStart.setColor(Color.BLACK);
+		fontStart.draw(batch, "Press to start", 275, 900);
 		batch.end();
-
-		/****************************************"T"*RED*******************************************/
-		batchTitle.begin();
-		fontTitle.draw(batchTitle, "T", 200, 1100);
-		fontTitle.setColor(198, 17, 23, 1);
-		batchTitle.end();
-		/****************************************"E"*ORANGE****************************************/
-		batchTitle.begin();
-		fontTitle.draw(batchTitle, "E", 275, 1100);
-		fontTitle.setColor(214, 118, 6, 1);
-		batchTitle.end();
-		/****************************************"T"*YELLOW****************************************/
-		batchTitle.begin();
-		fontTitle.setColor(211, 217, 25, 1);
-		fontTitle.draw(batchTitle, "T",	350, 1100);
-		batchTitle.end();
-		/****************************************"R"*GREEN*****************************************/
-		batchTitle.begin();
-		fontTitle.setColor(137, 203, 12, 1);
-		fontTitle.draw(batchTitle, "R",	425, 1100);
-		batchTitle.end();
-		/****************************************"I"*BLUE******************************************/
-		batchTitle.begin();
-		fontTitle.setColor(8, 144, 229, 1);
-		fontTitle.draw(batchTitle, "I",	500, 1100);
-		batchTitle.end();
-		/****************************************"S"*PURPLE****************************************/
-		batchTitle.begin();
-		fontTitle.setColor(215, 24, 242, 1);
-		fontTitle.draw(batchTitle, "S", 575, 1100);
-		batchTitle.end();
 
 		if(Gdx.input.isTouched()){
 			play = true;
@@ -124,42 +109,36 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	public void printScore(){
-		BitmapFont font = new BitmapFont();
+		BitmapFont score = new BitmapFont();
 		String text = "Score : " + myGM.getScore();
 		batch.begin();
-		font.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-		font.draw(batch, text, 100, 100);
+		score.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+		score.draw(batch, text, 100, 100);
 		batch.end();
 	}
 
 	public void initGame(){
-		Stage myStage = new Stage();
-		b = new BitmapFont();
-		Label.LabelStyle ls = new Label.LabelStyle(b, Color.WHITE);
-		myLab = new Label("",ls);
 		sr = new ShapeRenderer();
 		move = 40;
 		x = 900;
 		myDeltaManager = 0;
 		eventManager = 0;
 
-		//myStage = new Stage();
-		//myStage.addActor(myLab);
-		//Gdx.input.setInputProcessor(myStage);
-
-
 		myGM = new GameManager();
 		myGM.generateNextTetrimino();
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		TimeSt = System.currentTimeMillis();
-
-		myMusic.playTetris();
-		myMusic.loopTetris();
+		myMusic.playTetris05();
+		myMusic.loopTetris05();
 	}
 
 
-	public void gameT(){
+	public void gameP(){
+		myMusic.stopTetris05();
+		myMusic.playTetris();
+		myMusic.loopTetris();
+
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -173,10 +152,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		TimeUpd = System.currentTimeMillis();
 		myDeltaManager += Gdx.graphics.getDeltaTime();
 		eventManager += Gdx.graphics.getDeltaTime();
-//		myStage.draw();
+
 		printGrid();
 		printScore();
-		//l.setText(myGM.getSc()+ "");
 
 		if(eventManager > 0.1){
 			manageEvent();
@@ -201,8 +179,6 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	public void manageEvent(){
-		int firstX;
-		int firstY;
 
 		if(Gdx.input.isTouched()){
 			firstX = Gdx.input.getX();
@@ -230,7 +206,6 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	public void printGrid(){
-		Texture t1,t2;
 		t1 = new Texture(Gdx.files.internal("grid/linev.png"));
 		t2 = new Texture(Gdx.files.internal("grid/lineh.png"));
 
